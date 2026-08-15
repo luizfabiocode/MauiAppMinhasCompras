@@ -11,7 +11,11 @@ namespace MauiAppMinhasCompras
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            // Comente ou remova esta linha se não quiser mais o AppShell
+            // return new Window(new AppShell());
+
+            // Use esta linha para iniciar com sua página ListaProduto
+            return new Window(new NavigationPage(new Views.ListaProduto()));
         }
     }
 }
