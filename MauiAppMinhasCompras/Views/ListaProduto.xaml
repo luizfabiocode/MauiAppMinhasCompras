@@ -5,16 +5,51 @@
              Title="Minhas Compras">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Somar" />
-        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Somar" Clicked="ToolbarItem_Somar_Clicked" />
+        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Adicionar_Clicked"/>
 
     </ContentPage.ToolbarItems>
 
 
-        <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Spacing="10" Padding="10">
+
+        <!-- ⭐ NOVO: SearchBar para busca dinâmica -->
+        <SearchBar x:Name="SearchBarProdutos" 
+                   Placeholder="🔍 Buscar produtos..." 
+                   TextChanged="OnSearchTextChanged"/>
+
+        <!-- ⭐ NOVO: CollectionView para exibir os produtos -->
+        <CollectionView x:Name="CollectionViewProdutos" 
+                        SelectionMode="None"
+                        EmptyView="Nenhum produto encontrado">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" 
+                          ColumnDefinitions="*, Auto"
+                          BackgroundColor="#F0F0F0"
+                          Margin="0,2">
+
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="{Binding Descricao}" 
+                                   FontAttributes="Bold"
+                                   FontSize="16"/>
+                            <Label Text="{Binding preco, StringFormat='Preço: R$ {0:F2}'}"
+                                   FontSize="14"
+                                   TextColor="Green"/>
+                            <Label Text="{Binding Quantidade, StringFormat='Quantidade: {0}'}"
+                                   FontSize="14"
+                                   TextColor="Blue"/>
+                        </VerticalStackLayout>
+
+                        <Label Grid.Column="1" 
+                               Text="✏️" 
+                               VerticalOptions="Center"
+                               FontSize="20"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
     </VerticalStackLayout>
 </ContentPage>

@@ -5,19 +5,42 @@
              Title="Novo Produto">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Salvar"  Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout Spacing="10" Padding="10">
-        <Label Text="Descrição do Produto:"/>
-        <Entry x:Name="txt_descriçao"/>
+    <VerticalStackLayout Spacing="15" Padding="20">
 
-        <Label Text="Quantidade:"/>
-        <Entry x:Name="txt_quantidade" Keyboard="Numeric"/>
+        <Label Text="Descrição do Produto:" 
+               FontAttributes="Bold"
+               TextColor="Black"/>
+        <Entry x:Name="txt_descriçao" 
+               Placeholder="Digite a descrição..."
+               BackgroundColor="#F0F0F0"/>
 
-        <Label Text="Preço Unitario:"/>
-        <Entry x:Name="txt_preco" Keyboard="Numeric"/>
+        <Label Text="Quantidade:" 
+               FontAttributes="Bold"
+               TextColor="Black"/>
+        <Entry x:Name="txt_quantidade" 
+               Keyboard="Numeric"
+               Placeholder="Digite a quantidade..."
+               BackgroundColor="#F0F0F0"/>
 
+        <Label Text="Preço Unitário:" 
+               FontAttributes="Bold"
+               TextColor="Black"/>
+        <Entry x:Name="txt_preco" 
+               Keyboard="Numeric"
+               Placeholder="Digite o preço..."
+               BackgroundColor="#F0F0F0"/>
+
+        <!-- ⭐ NOVO: Botão Salvar na tela (opcional, além do Toolbar) -->
+        <Button Text="Salvar Produto"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                CornerRadius="10"
+                HeightRequest="50"
+                Clicked="ToolbarItem_Clicked"
+                Margin="0,20,0,0"/>
 
     </VerticalStackLayout>
 </ContentPage>
