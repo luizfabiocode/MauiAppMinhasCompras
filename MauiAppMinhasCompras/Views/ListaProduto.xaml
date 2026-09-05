@@ -7,46 +7,52 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Somar" Clicked="ToolbarItem_Somar_Clicked" />
         <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Adicionar_Clicked"/>
-
     </ContentPage.ToolbarItems>
-
 
     <VerticalStackLayout Spacing="10" Padding="10">
 
-        <!-- ⭐ NOVO: SearchBar para busca dinâmica -->
-        <SearchBar x:Name="SearchBarProdutos" 
+        <SearchBar x:Name="SearchBarProdutos"
                    Placeholder="🔍 Buscar produtos..." 
                    TextChanged="OnSearchTextChanged"/>
 
-        <!-- ⭐ NOVO: CollectionView para exibir os produtos -->
         <CollectionView x:Name="CollectionViewProdutos" 
-                        SelectionMode="None"
+                        SelectionMode="Single"
+                        SelectionChanged="CollectionViewProdutos_SelectionChanged"
                         EmptyView="Nenhum produto encontrado">
-
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10" 
-                          ColumnDefinitions="*, Auto"
-                          BackgroundColor="#F0F0F0"
-                          Margin="0,2">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Remover"
+                                           BackgroundColor="Red"
+                                           Invoked="SwipeItem_Invoked" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
 
-                        <VerticalStackLayout Grid.Column="0">
-                            <Label Text="{Binding Descricao}" 
-                                   FontAttributes="Bold"
-                                   FontSize="16"/>
-                            <Label Text="{Binding preco, StringFormat='Preço: R$ {0:F2}'}"
-                                   FontSize="14"
-                                   TextColor="Green"/>
-                            <Label Text="{Binding Quantidade, StringFormat='Quantidade: {0}'}"
-                                   FontSize="14"
-                                   TextColor="Blue"/>
-                        </VerticalStackLayout>
+                        <Grid Padding="10" 
+                              ColumnDefinitions="*, Auto"
+                              BackgroundColor="#F0F0F0"
+                              Margin="0,2">
 
-                        <Label Grid.Column="1" 
-                               Text="✏️" 
-                               VerticalOptions="Center"
-                               FontSize="20"/>
-                    </Grid>
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding Descricao}" 
+                                       FontAttributes="Bold"
+                                       FontSize="16"/>
+                                <Label Text="{Binding preco, StringFormat='Preço: R$ {0:F2}'}"
+                                       FontSize="14"
+                                       TextColor="Green"/>
+                                <Label Text="{Binding Quantidade, StringFormat='Quantidade: {0}'}"
+                                       FontSize="14"
+                                       TextColor="Blue"/>
+                            </VerticalStackLayout>
+
+                            <Label Grid.Column="1" 
+                                   Text="✏️" 
+                                   VerticalOptions="Center"
+                                   FontSize="20"/>
+                        </Grid>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

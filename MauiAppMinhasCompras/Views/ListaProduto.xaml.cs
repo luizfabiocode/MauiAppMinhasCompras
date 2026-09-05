@@ -14,7 +14,7 @@ public partial class ListaProduto : ContentPage
     public ListaProduto()
     {
         InitializeComponent();
-        _db = App.Db;  // ⭐ CORRIGIDO: Usa a mesma instância do App
+        _db = App.Db;
         CarregarProdutos();
     }
 
@@ -80,5 +80,58 @@ public partial class ListaProduto : ContentPage
             await DisplayAlert("Total", "Nenhum produto cadastrado", "OK");
         }
     }
-}
 
+    private async void SwipeItem_Invoked(object sender, EventArgs e)
+    {
+        try
+        {
+            if (sender is SwipeItem swipeItem && swipeItem.BindingContext is Produto p)
+            {
+                bool confirm = await DisplayAlert(
+                    "Tem Certeza?", $"Remover {p.Descricao}?", "Sim", "Não");
+
+                if (confirm)
+                {
+                    // 1. Chama o seu método 'delete' com 'd' minúsculo passando o objeto produto
+                    await _db.delete(p);
+
+                    // 2. Remove da lista filtrada
+                    _produtosFiltrados.Remove(p);
+
+                    // 3. Remove da lista principal comparando pelo id minúsculo
+                    var itemOriginal = _todosProdutos.FirstOrDefault(i => i.id == p.id);
+                    if (itemOriginal != null)
+                    {
+                        _todosProdutos.Remove(itemOriginal);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+    }
+
+    private async void CollectionViewProdutos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            // No CollectionView, acessamos o item através de e.CurrentSelection
+            if (e.CurrentSelection.FirstOrDefault() is Produto p)
+            {
+                await Navigation.PushAsync(new Views.EditarProduto
+                {
+                    BindingContext = p
+                });
+
+                // Reseta a seleção para permitir selecionar o mesmo item novamente
+                ((CollectionView)sender).SelectedItem = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+    }
+}

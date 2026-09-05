@@ -9,23 +9,23 @@ public partial class NovoProduto : ContentPage
         InitializeComponent();
     }
 
-    // ⭐ CORRIGIDO: Adicionado 'async' e 'await' no DisplayAlert
+    
     private async void ToolbarItem_Clicked(object sender, EventArgs e)
     {
         try
         {
             Produto p = new Produto
             {
-                Descricao = txt_descriçao.Text,
+                Descricao = txt_descricao.Text,
                 Quantidade = Convert.ToDouble(txt_quantidade.Text),
-                preco = Convert.ToDouble(txt_preco.Text)  // ⭐ CORRIGIDO: 'preco' minúsculo (igual ao modelo)
+                preco = Convert.ToDouble(txt_preco.Text) 
             };
 
-            await App.Db.insert(p);
-            await DisplayAlert("Sucesso!", "Registro Inserido", "OK");
+            await App.Db.update(p);
+            await DisplayAlert("Sucesso!", "Registro Atualizado", "OK");
+            await Navigation.PopAsync();
 
-            // ⭐ NOVO: Limpar os campos após salvar
-            txt_descriçao.Text = "";
+            txt_descricao.Text = "";
             txt_quantidade.Text = "";
             txt_preco.Text = "";
         }
