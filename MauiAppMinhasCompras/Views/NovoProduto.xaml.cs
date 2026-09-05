@@ -21,8 +21,8 @@ public partial class NovoProduto : ContentPage
                 preco = Convert.ToDouble(txt_preco.Text) 
             };
 
-            await App.Db.update(p);
-            await DisplayAlert("Sucesso!", "Registro Atualizado", "OK");
+            await App.Db.insert(p);
+            await DisplayAlert("Sucesso!", "Registro Inserido", "OK");
             await Navigation.PopAsync();
 
             txt_descricao.Text = "";
